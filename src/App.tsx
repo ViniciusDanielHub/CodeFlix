@@ -1,58 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import './App.css';
+import { Box, ThemeProvider } from '@mui/system';
+import {Header} from './components/Header/index';
+import { Layout } from './components/Layout';
+import { appTheme } from './config/theme';
+import { Typography } from '@mui/material';
+import { Route, Routes } from 'react-router-dom';
+import { CategoryList } from './features/categories/CategoryList';
+import { CreateCategory } from './features/categories/CreateCategory';
+import { CategoryEdit } from './features/categories/CategoryEdit';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
-  );
+    <ThemeProvider theme={appTheme}>
+      <Box
+      sx={{
+        height: '100vh',
+          backgroundColor: (theme) => theme.palette.secondary.dark
+
+      }}
+      >
+      <Header/>
+      <Layout>
+       <Routes>
+        <Route path="/" element={<CategoryList/>} />
+          <Route path="/categories" element={<CategoryList/>} />
+          <Route path="/categories/create" element={<CreateCategory />} />
+       <Route path="/categories/edit/:id" element={<CategoryEdit />} />
+
+       <Route path="*" element={
+          <Box sx={{color: 'white'}}>
+            <Typography variant='h1'>404</Typography>
+              <Typography variant='h2'>Page not found</Typography>
+          </Box>
+         } 
+       />
+       </Routes>
+      </Layout>
+      </Box>
+    </ThemeProvider>
+  )
 }
 
 export default App;
